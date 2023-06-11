@@ -10,9 +10,10 @@ class User {
     return user;
   };
 
-  getUsersById = async (username) => {
-    console.log("entra al user.model");
-    const user = await userModel.findOne({ email: username }).lean();
+  getUsersById = async (cartId) => {
+   
+    const user = await userModel.findOne({cart: cartId});
+    
     return user;
   };
 

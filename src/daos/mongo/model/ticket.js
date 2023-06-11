@@ -17,7 +17,18 @@ const ticketSchema = new mongoose.Schema({
   amount: Number,
   //purcharser contendra el correo del comprador
   purcharser: String,
-  
+  purchase_datetime: {
+    type: Date,
+    default: Date.now // Establece el valor por defecto como la fecha y hora actual
+  }, 
+ 
+  arrayproductscomprados: {
+    type: [String], 
+    
+  },
+  arrayproductsnocomprados: {
+    type: [String],     
+  },
 });
 
 

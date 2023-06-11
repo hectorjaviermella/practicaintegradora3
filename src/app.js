@@ -14,9 +14,14 @@ import viewsRouter from "./routers/views.router.js";
 import productsRouter  from "./routers/products.router.js";
 import cartsrouter  from "./routers/carts.router.js";
 
+import mailRouter from './routers/mail.router.js';
+
+//manejador de errores
+import errorHandler from "./middlewares/errors/index.js";
+
 import socket from "./socket.js";
 import mongoose from "mongoose";
-import { routerApi } from "./routers/index.js";
+//import { routerApi } from "./routers/index.js";
 
 // initialization
 const app = express();
@@ -56,7 +61,10 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsrouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/", viewsRouter);
+app.use("/mail", mailRouter);
 
+//manejador de errores
+app.use(errorHandler);
 
 
 const httpServer = app.listen(8080, (req,res) => {

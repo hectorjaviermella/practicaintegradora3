@@ -13,7 +13,7 @@ async getCartsById(id) {
   }
 ////////////////////////////////////////////////////////////////////////
 async createCart(cart) {
-    console.log("createCart service");
+  
     const createCart =  await cartRepository.createCart(cart);
     return createCart;
   }
@@ -32,7 +32,7 @@ async createCart(cart) {
 
  ////////////////////////////////////////////////////////////////////////
  async deleteProductToCart(cId,pId) {
-   console.log("entro al carts.service al deleteProductToCart")
+  
     const deleteCart = await cartRepository.deleteProductToCart(cId,pId);
     return deleteCart;
   }

@@ -8,8 +8,7 @@ export default class ProductsService {
 ///////////////////////////////////////////////////////////
 
  async getProducts(query,limit,page,pCategory,pStatus,sort) {
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-    console.log(" producto.service.js  en getProducts")
+  
     const products = await productRepository.getProducts(query,limit,page,pCategory,pStatus,sort);
  
     return products;
@@ -23,7 +22,7 @@ async getProductsById(pId) {
 ////////////////////////////////////////////////////////////////////////
 
 async addProduct(product) {
-  console.log("entro al procuts.service al addproduct");
+  console.log(" xxx entro al procuts.service al addproduct");
     //const productToSave = new ProductDTO(product);
     const result = await productRepository.addProduct(product);
     return result;
@@ -31,6 +30,7 @@ async addProduct(product) {
 ////////////////////////////////////////////////////////////////////////
 
 async updateProducto(pId,productonuevo) {
+    console.log("updaterproduct de products.service ");
     const createdProduct =  await productRepository.updateProducto(pId,productonuevo);
     return createdProduct;
   }

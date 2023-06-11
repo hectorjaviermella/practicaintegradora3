@@ -1,14 +1,12 @@
 import { Router } from "express";
 import { checkLogged, checkLogin } from "../middlewares/auth.js";
-
-
 import  productsService  from "../services/products.service.js";
 import  cartsService  from "../services/carts.service.js";
+import  {sendEmail} from "../controllers/mail.controller.js";
+import { mockingproducts} from "../controllers/products.controller.js";
 
 
-
-import {login,register,current, restore,inicio,getProducts, getProductsById,getCartsById} from "../controllers/views.controller.js";
-
+import {login,register,current, restore,inicio,getProducts, getProductsById,getCartsById,ticket} from "../controllers/views.controller.js";
 
 export const viewsRouter = Router();
 console.log("entro al view.router");
@@ -37,5 +35,13 @@ viewsRouter.get("/product/:pId", getProductsById);
 /////////////////////////////////////////////////////////////////////////////////////
 //muestra un carrito
 viewsRouter.get("/cart/:cId", getCartsById);
+///////////////////////////////////////////////////////////////
+viewsRouter.get("/cart/:cid/purchase",ticket)
+
+viewsRouter.get("/mail",sendEmail);
+
+///////////////////////////////////////////////////////////////
+//crea una lista de productos con facker para pruebas
+viewsRouter.get("/mockingproducts", mockingproducts);
 
 export default viewsRouter;

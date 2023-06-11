@@ -1,6 +1,11 @@
 import  CartsService  from "../services/carts.service.js";
+import  ProductsService  from "../services/products.service.js";
+import  TicketService  from "../services/tickets.service.js";
 
 const cartsService = new CartsService();
+const productsService = new ProductsService();
+const ticketService = new TicketService();
+
 console.log("entro al carts.controllers");
 //////////////////////////////////////////////////////////////////////////////////////////////
 export async function getCardId(req, res) {
@@ -46,13 +51,22 @@ export async function addProductToCart(req, res) {
         const cId = req.params.cId;
         const pId = req.params.pId;
     
-
-        let created =  await cartsService.addProductToCart(cId,pId,pquantity);    
+        let product = await productsService.getProductsById(pId);
+        if  (product && product.pStock>0){
+            let created =  await cartsService.addProductToCart(cId,pId,pquantity);    
+            return res.send({
+              status: "success",
+              message: "Product Add to cart",
+              payload: cId,
+            });
+      }else{
         return res.send({
-          status: "success",
-          message: "Product Add to cart",
+          status: "Error",
+          message: "Product do not stock",
           payload: cId,
         });
+      }
+
       } catch (error) {
         res.status(500).json({ error: error.message });
       }
@@ -167,4 +181,14 @@ export function updatetoListProducToCart(req, res) {
     }
   
 };
-  
+  ////////////////////////////////////////////////////////////////////
+  export async function purchase(req, res) {
+    try {
+      console.log("createTicket de ticket.controller xxx"); 
+        const cId = req.params.cId;    
+        const ticket = await ticketService.createTicket(cId);
+        return res.send({ status: "success", payload: ticket });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+};

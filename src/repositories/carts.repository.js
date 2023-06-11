@@ -9,7 +9,7 @@ export default class CartsRepository {
       try {
         console.log("entor carts repository");
        const carts = await this.dao.getCarts();      
-       console("carrito" , carts);
+      
        
         return carts;
       } catch (error) {
@@ -19,10 +19,7 @@ export default class CartsRepository {
 ////////////////////////////////////////////////////////////////////////////  
 async getCartsById(cId) {
   try {
-    
-    console.log("entro en carts.repository al getCartsbyid ", cId);
-    console.log(this.dao);
-    //const cart = await this.dao.findOne({ _id: cId }).lean().populate("products.pId");
+       
 
     const cart = await this.dao.getCartsById(cId);
     return cart;
@@ -54,12 +51,11 @@ async createCart(cart) {
 ////////////////////////////////////////////////////////////////////////////
 async addProductToCart(cId,pId,pquantity){
   try {
-    console.log("addProdutTocart  vvvvvvvvvvvvvvvvvvvvvvv"); 
-    console.log("valores ", cId,pId, pquantity)
-    let result;
+ 
+      let result;
     //recupero el carrito
     const cart = await this.dao.getCartsById({ _id: cId });
-    console.log("cart xx ", cart)
+   
     if (cart=== undefined){
       return  "No existe el carrito";
    };
@@ -68,7 +64,8 @@ async addProductToCart(cId,pId,pquantity){
       
             ///let indexproduct = productstocart.findIndex((product) => product.pId.toString() === pId.toString());  
             if (indexproduct === -1){ //no encontro el producto 
-              console.log("no encontro el producto");
+           
+              
               const productagregar = {"pId" : Object(pId) , "quantity" : Number(pquantity.quantity)};
               productstocart.push(productagregar);
               cart.products=productstocart; 
@@ -115,7 +112,7 @@ async deleteCart(cId) {
 
 async  updateQuantitytoProductToCart(cId,pId,pquantity){
   try {
-    console.log("actualizar la cantidad de unidades de produto to cart"); 
+  
       let result="";
       let tempcarrito = await  this.dao.findOne({ _id: cId });
       if (tempcarrito)
@@ -150,13 +147,13 @@ async  updateQuantitytoProductToCart(cId,pId,pquantity){
 ////////////////////////////////////////////////////////////////////////////
 async updatetoListProducToCart(cId,listproduc) {
   try {
-    console.log("acutaliza el cart con una lista de productos manager"); 
+
       let result="";
-      console.log("liscarrito",listproduc);
+     
       let cart = await this.dao.findOne({ _id: cId });
       if (cart)
            {
-            console.log("encontro el cart xx " , cart);
+           
             //recorro cada elemento de la lista a agregar
             for (let i = 0; i < listproduc.length ; i++) {
                       //lista de elementos del carrito
@@ -167,7 +164,7 @@ async updatetoListProducToCart(cId,listproduc) {
                         let indiceProducto = await productstocart.findIndex((product) => product.pId.toString() === pId.toString());                          
                         
                         if(indiceProducto <0){//insertarlo 
-                            //console.log("elemento no encontrado",productemp.pId);  
+                           
                             let newquantity = productemp.quantity;                          
                             const updateResponse = await fetch(`http://localhost:8080/api/carts/${cId}/product/${productemp.pId}`,{
                             method:'POST',
@@ -207,17 +204,15 @@ async deleteProductToCart(cId,pId) {
     
       if (tempcarrito)
            {
-            console.log("product.pId ", pId);
+         
             let productstocart = tempcarrito.products;  
-            console.log("paso tempcarrito ", tempcarrito);  
-           // console.log("paso tempcarrito ", productstocart[0].pId._id);  
-            //let indiceProducto = await productstocart.findIndex((product) => product.pId === pId); 
-
+        
+          
             let indiceProducto = await productstocart.findIndex((product) => product.pId._id.equals(pId));  
-            console.log("encuentrea el producto indice ", indiceProducto);            
+                 
             if (indiceProducto>=0)
                  {//encontrado el producto        
-                  console.log("indice mayor a 0  ", indiceProducto);  
+              
 
                  // result= await cartModel.updateOne({ _id: cId },  {$pull: {products: {pId: pId}}});
                  result= await this.dao.updateOnex({ _id: cId },  {$pull: {products: {pId: pId}}});

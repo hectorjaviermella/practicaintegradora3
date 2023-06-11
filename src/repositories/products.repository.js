@@ -4,8 +4,7 @@ export default class ProductsRepository {
   }
      async getProducts(query,limit,page,pCategory,pStatus,sort){
         try {
-          console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-          console.log("estoy products.repositori en getProducts: " , this.dao);
+        
       
           let products=0;              
        // products = await this.dao.getProducts(query, {limit:limit,page:page,pCategory,pStatus,lean:true,sort:sort});
@@ -20,7 +19,7 @@ export default class ProductsRepository {
 //////////////////////////////////////////////////////////////////////////  
 async getProductsById(pId){
     try {
-      console.log("entro a procuts.repository al getProductsById " + pId);
+   
       const products = await this.dao.getProductsById(pId);
       return products;
     } catch (error) {
@@ -42,7 +41,7 @@ async addProduct(product){
 /////////////////////////////////////////////////////////////////////////////////
 async deleteProduct(pId){
     try {
-       console.log("products.repository deleteproecut");
+   
         let result = await  this.dao.deleteProduct(pId);
       return result;
     } catch (error) {
@@ -52,6 +51,8 @@ async deleteProduct(pId){
 /////////////////////////////////////////////////////////////////////////////////////
 async updateProducto(pId,productonuevo){
     try {
+    
+    
       const createdProduct = await this.dao.updateProducto( pId , productonuevo);
       return createdProduct;
     } catch (error) {

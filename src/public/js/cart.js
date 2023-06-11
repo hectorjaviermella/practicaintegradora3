@@ -26,7 +26,7 @@ ticket.addEventListener("click",(e)=>{
         timerProgressBar: "!m-auto !h-1 !my-2 !bg-blue-600/90 !rounded-3xl",
       },
       willClose: () => {
-        window.location.href = "/products";
+        window.location.href = "/ticket";
       }
       
     });

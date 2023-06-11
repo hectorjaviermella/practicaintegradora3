@@ -6,8 +6,7 @@ class Product {
   
   async getProducts(query,limit,page,pCategory,pStatus,sort){
     try {
-      console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXX");
-      console.log("estoy product.mongo en getProducts ");
+     
 
       let products=0;         
       
@@ -22,7 +21,7 @@ class Product {
 //////////////////////////////////////////////////////////////////////////  
 async getProductsById(pId){
 try {
-  console.log("entro a product.mongo al getProductsById ",  pId);
+  
    const products = await productModel.findById({ _id: pId ,lean:true}).lean();
   return products;
 } catch (error) {

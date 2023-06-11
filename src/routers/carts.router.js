@@ -1,7 +1,7 @@
 
 import { Router } from "express";
 import { checkPermisosUsuario } from "../middlewares/auth.js";
-import { getCardId, createCart,addProductToCart,deleteCardId,deleteProductToCard,updateQuantitytoProductToCart,updatetoListProducToCart } from "../controllers/carts.controller.js";
+import { getCardId, createCart,addProductToCart,deleteCardId,deleteProductToCard,updateQuantitytoProductToCart,updatetoListProducToCart,purchase} from "../controllers/carts.controller.js";
 import {getTicketsById,createTicket } from "../controllers/tickets.controller.js";
 
 
@@ -39,6 +39,8 @@ cartsrouter.put("/:cId", updatetoListProducToCart);
 
 //////////////////////////////////////////////////////////////////////////////////////
 //agregar  un ticket de la compra de un  carrito
-cartsrouter.get("/:cId/purchase",createTicket);
+cartsrouter.get("/:cId/purchase",purchase);
+
+
 
 export default cartsrouter;

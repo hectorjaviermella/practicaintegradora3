@@ -1,5 +1,12 @@
 
 import  ProductsService  from "../services/products.service.js";
+import { generateProducts } from "../utils.js";
+
+import CustomError from "../services/errors/CustomError.js";
+import {EErrors} from "../services/errors/enum.js";
+import { generateUserErrorInfo } from "../services/errors/info.js";
+
+
 const productsService = new ProductsService();
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,17 +53,38 @@ export async function getProductsById(req, res) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 export  async function addProduct(req, res) {
-//router.post("/",uploader.array("pThumbnail"), async (req, res) => {
+
    console.log("entro al procuts.controler al addproduct"); 
-   console.log("body",req.body);
    
-    let { pTitle, pDescription, pCode, pPrice, pStatus, pStock, pCategory } = req.body;
+   const productox = req.body;
+   const producto = JSON.stringify(productox);
+   console.log("productoxxx" +  producto);
+
+    let { pTitle, pDescription, pCode, pPrice, pStatus, pStock, pCategory } = req.body;  
 
     if (!pTitle || !pDescription || !pCode || !pPrice || !pStatus || !pStock || !pCategory ) {
-        return res
-                .status(400)
-                .send({ status: "Error", error: "Incomplete campos" });
-      }
+      // return res.status(400).send({ status: "Error", error: "Incomplete campos" });
+  console.log("productoxxx " +  producto);
+
+                 CustomError.createError({
+                  name: "Product errorsss",
+                  cause: generateUserErrorInfo({
+                    pTitle : producto.pTitle,
+                    pDescription: producto.pDescription,
+                    pCode : producto.pCode ,
+                    pPrice : producto.pPrice,
+                    pStatus : producto.pStatus,
+                    pStock : producto.pStock,
+                    pCategory: producto.pCategory,
+                  }),
+                  message: "Error trying to create a Product",
+                  code: EErrors.INVALID_TYPES_ERROR,
+                });
+            //  return  CustomError;
+               
+      };
+
+
       const newproduct = {
         pTitle,
         pDescription,
@@ -126,3 +154,19 @@ export  async function deleteProduct(req, res) {
     }
   };
   
+//////////////////////////////////////////////////////////////////////////////////////
+export  async function mockingproducts(req, res) {
+  try {
+    let products = [];
+   
+     for (let i = 0; i < 100; i++) {
+       products.push(generateProducts());
+     }
+     res.json({
+       status: "success",
+       payload: products,
+     });
+  } catch (error) {
+    console.log(error);
+  }
+};
